@@ -1,0 +1,85 @@
+<mat-card>
+  <mat-card-header class="header">
+    <mat-card-title>
+      <h2>Events for day {{ date | date : 'dd, MMMM of yyyy' }}</h2>
+    </mat-card-title>
+    <button
+      mat-raised-button
+      color="primary"
+      class="add-button"
+      [matMenuTriggerFor]="menu"
+      #menuTrigger
+      primary
+    >
+      <mat-icon>add</mat-icon>
+      Create event
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="openDialog('task')">Create Task</button>
+      <button mat-menu-item (click)="openDialog('event')">Create Event</button>
+    </mat-menu>
+  </mat-card-header>
+  <mat-card-content>
+    <table mat-table [dataSource]="events$" class="mat-elevation-z8">
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>Title</th>
+        <td
+          mat-cell
+          *matCellDef="let event"
+          [style.background-color]="eventBackgroundColor(event.color)"
+        >
+          {{ event.title }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td
+          mat-cell
+          *matCellDef="let event"
+          [style.background-color]="eventBackgroundColor(event.color)"
+        >
+          {{ event.description }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="startDate">
+        <th mat-header-cell *matHeaderCellDef>Start time</th>
+        <td
+          mat-cell
+          *matCellDef="let event"
+          [style.background-color]="eventBackgroundColor(event.color)"
+        >
+          {{ event.startDate | date : 'HH:mm' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="endDate">
+        <th mat-header-cell *matHeaderCellDef>End time</th>
+        <td
+          mat-cell
+          *matCellDef="let event"
+          [style.background-color]="eventBackgroundColor(event.color)"
+        >
+          {{ event.endDate | date : 'HH:mm' }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td
+          mat-cell
+          *matCellDef="let event"
+          [style.background-color]="eventBackgroundColor(event.color)"
+        >
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="deleteEvent(event.id)"
+            matTooltip="Delete event"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,76 @@
+<form [formGroup]="eventForm" (ngSubmit)="submit()">
+  <mat-dialog-content>
+    <mat-form-field class="full-width">
+      <mat-label>Title</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="title"
+        placeholder="Ex. Buy groceries"
+        class="full-width"
+      />
+    </mat-form-field>
+    <div class="form-date">
+      <mat-form-field appearance="fill">
+        <mat-label>Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          (dateChange)="setDate($event)"
+          [value]="eventForm.value['startDate']"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Start time</mat-label>
+        <input
+          type="time"
+          matInput
+          (change)="setDateTime($event, 'start')"
+          [value]="eventForm.value['startDate'] | date : 'HH:mm'"
+          class="full-width"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>End time</mat-label>
+        <input
+          type="time"
+          matInput
+          (change)="setDateTime($event, 'end')"
+          [value]="eventForm.value['endDate'] | date : 'HH:mm'"
+          class="full-width"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Color</mat-label>
+        <mat-select formControlName="color">
+          <mat-option
+            *ngFor="let color of eventColors"
+            value="{{ color.name }}"
+          >
+            <span [style.color]="color.value">●</span>
+            {{ color.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        type="text"
+        matInput
+        formControlName="description"
+        class="full-width"
+      ></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog-footer">
+    <button mat-button mat-dialog-close color="warn">Cancel</button>
+    <button mat-raised-button color="primary" type="submit">Confirm</button>
+  </mat-dialog-actions>
+</form>

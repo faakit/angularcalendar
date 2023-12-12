@@ -1,0 +1,23 @@
+.full-width {
+  width: 100%;
+}
+
+.dialog-footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin: 1rem;
+}
+
+.form-date {
+  display: inline-flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-items: start;
+
+  .mat-mdc-form-field {
+    min-width: 80px;
+    flex: 1;
+  }
+}
